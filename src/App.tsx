@@ -3,6 +3,7 @@ import FormPage from "./pages/FormPage";
 import LandingPage from "./pages/LandingPage";
 import PreviewPage from "./pages/PreviewPage";
 import { Formik, Form } from "formik";
+import { CircularProgress, Typography } from "@mui/material";
 
 export interface FormValuesInterface {
   name: string;
@@ -114,13 +115,33 @@ const App = () => {
         setFinalValues(values);
 
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          //alert(JSON.stringify(values, null, 2));
           actions.setSubmitting(false);
           setPage("preview");
-        }, 1000);
+        }, 2000);
       }}
     >
-      <CurrentPage />
+      {(props) =>
+        // todo: this does not initiate the loading of the pdf
+        props.isSubmitting ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "100vh",
+            }}
+          >
+            <Typography variant="h4" gutterBottom>
+              Generating PDF
+            </Typography>
+            <CircularProgress />
+          </div>
+        ) : (
+          <CurrentPage />
+        )
+      }
     </Formik>
   );
 };
