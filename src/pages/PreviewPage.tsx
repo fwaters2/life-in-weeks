@@ -1,29 +1,24 @@
-import React from "react";
-
-import {
-  PDFViewer,
-  //usePDF
-} from "@react-pdf/renderer";
+import { PDFViewer, usePDF } from "@react-pdf/renderer";
 import Printable from "../Printable";
 
-const PreviewPage = (props: { name: string }) => {
-  const { name } = props;
-  //   const [instance, update] = usePDF({ document: <Printable name={name} /> });
-
-  //   if (instance.loading) return <div>Loading ...</div>;
-
-  //   if (instance.error) return <div>Something went wrong: {instance.error}</div>;
+const PreviewPage = (props: any) => {
+  // const formValues = formik.values as FormValuesInterface;
+  // const [instance, update] = usePDF({
+  //   document: <Printable formData={props.finalValues} />,
+  // });
+  // if (instance.loading) return <div>Loading ...</div>;
+  // if (instance.error) return <div>Something went wrong: {instance.error}</div>;
   return (
     <div
       style={{
         height: "100vh",
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "row",
         alignItems: "center",
       }}
     >
       <PDFViewer height="100%" width="100%">
-        <Printable name={name} />
+        <Printable formData={props.finalValues} />
       </PDFViewer>
     </div>
   );

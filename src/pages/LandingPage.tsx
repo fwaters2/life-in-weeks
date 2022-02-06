@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React from "react";
 
 const paragraphs = [
@@ -42,7 +43,9 @@ const LandingPage = (props: { setPage: any }) => {
           ))}
         </ul>
       </div>
-      <button onClick={() => setPage("form")}>Begin</button>
+      <Button variant="contained" onClick={() => setPage("form")}>
+        Begin
+      </Button>
     </div>
   );
 };

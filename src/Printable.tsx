@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Document,
   Page,
@@ -7,7 +6,9 @@ import {
   StyleSheet,
   Font,
 } from "@react-pdf/renderer";
+import dayjs from "dayjs";
 import { colors } from "./assets/colors";
+import { getEmojiData, getYearsOfLife } from "./utils";
 
 Font.registerEmojiSource({
   format: "png",
@@ -20,28 +21,29 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightgrey,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    padding: 5,
   },
   section: {
     alignItems: "center",
   },
   weekSquare: {
-    width: 6,
-    height: 6,
+    width: 8,
+    height: 8,
     margin: 1,
   },
+  emoji: {
+    fontSize: 7,
+    width: 10,
+    height: 10,
+    marginTop: 1,
+    position: "absolute",
+    backgroundColor: "white",
+    textAlign: "center",
+  },
 });
-// Number of Rows
-const WEEKS_IN_YEAR = 65;
 
-const ARBITRARY_CHILD_BIRTH_YEAR = 42;
-const ARBITRARY_CHILD_BIRTH_WEEK = 7;
-// Number of columns
-const YEARS_IN_LIFE = 82;
-const WEEK_CHILD_START =
-  ARBITRARY_CHILD_BIRTH_YEAR * WEEKS_IN_YEAR + ARBITRARY_CHILD_BIRTH_WEEK; // Hardcoded test date
-const YEARS_OF_CHILD_CARE = 21;
-const WEEK_CHILD_END = YEARS_OF_CHILD_CARE * WEEKS_IN_YEAR + WEEK_CHILD_START;
+// Number of Rows
+const WEEKS_BLOCKS_IN_ROW = 53;
 
 const EpochWrapper = (props: { isShaded?: boolean; children: any }) => {
   const { isShaded = false, children } = props;
@@ -57,60 +59,76 @@ const EpochWrapper = (props: { isShaded?: boolean; children: any }) => {
 };
 
 const SPACING = 2;
-const BIRTHDAY_EMOJI = "😀";
-const myAgeInWeeks = 58 * WEEKS_IN_YEAR + 50;
-const WeekSquare = (props: {
-  currentYear: number;
-  currentWeekInYear: number;
-  hasBottomMargin: number;
-}) => {
+
+const WeekSquare = (props: any) => {
   const { currentYear, currentWeekInYear, hasBottomMargin } = props;
-  const currentWeek = currentYear * WEEKS_IN_YEAR + currentWeekInYear;
-  const isFilled = currentWeek < myAgeInWeeks;
+
+  const currentWeek = currentYear * WEEKS_BLOCKS_IN_ROW + currentWeekInYear;
+  const isFilled = currentWeek < props.myAgeInWeeks;
   const isMultipleOfFive = (currentWeekInYear + 1) % 5 === 0;
+
+  const emoji = props.emojiData.find((data: any) => data.week === currentWeek);
+  const NO_CHILDREN =
+    !props.formData.youngestChildBirthday &&
+    !props.formData.eldestChildBirthday;
+
+  const Cell = () => {
+    return (
+      <View
+        style={[
+          styles.weekSquare,
+          {
+            backgroundColor: isFilled ? colors.brown : "white",
+            borderColor: colors.brown,
+            borderWidth: isFilled ? 0 : 1,
+            marginRight: isMultipleOfFive ? SPACING : 0,
+            marginBottom: hasBottomMargin ? SPACING : 0,
+          },
+        ]}
+      />
+    );
+  };
+  const EmojiWeek = (props: { emoji: any }) => {
+    const { emoji } = props;
+    return <Text style={styles.emoji}>{emoji.emoji}</Text>;
+  };
+  if (NO_CHILDREN) {
+    return (
+      <View>
+        <Cell />
+        {emoji && <EmojiWeek emoji={emoji} />}
+      </View>
+    );
+  }
+  const WEEK_CHILD_START = dayjs(props.formData.eldestChildBirthday).diff(
+    dayjs(props.formData.birthday),
+    "week"
+  );
+
+  const WEEKS_TO_RAISE_A_CHILD = 18 * WEEKS_BLOCKS_IN_ROW;
+  const lastChild =
+    props.formData.youngestChildBirthday || props.formData.eldestChildBirthday;
+  const WEEK_CHILD_END =
+    dayjs(lastChild).diff(dayjs(props.formData.birthday), "week") +
+    WEEKS_TO_RAISE_A_CHILD;
   const isChildCareWeek =
     currentWeek > WEEK_CHILD_START && currentWeek < WEEK_CHILD_END;
-  const RANDOM_WEEKS = [3725, 1500, 2487, 5555, 1987];
-  const hasEmoji = RANDOM_WEEKS.includes(currentWeek);
+
   return (
     <EpochWrapper isShaded={isChildCareWeek}>
-      {hasEmoji ? (
-        <View
-          style={[
-            styles.weekSquare,
-            {
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: isMultipleOfFive ? SPACING : 0,
-              marginBottom: hasBottomMargin ? SPACING : 0,
-            },
-          ]}
-        >
-          <Text style={{ fontSize: 5 }}>{BIRTHDAY_EMOJI}</Text>
-        </View>
-      ) : (
-        <View
-          style={[
-            styles.weekSquare,
-            {
-              backgroundColor: isFilled ? colors.brown : "white",
-              borderColor: colors.brown,
-              borderWidth: isFilled ? 0 : 1,
-              marginRight: isMultipleOfFive ? SPACING : 0,
-              marginBottom: hasBottomMargin ? SPACING : 0,
-            },
-          ]}
-        />
-      )}
+      <Cell />
+      {emoji && <EmojiWeek emoji={emoji} />}
     </EpochWrapper>
   );
 };
 
-const YearRow = (props: { currentYear: number }) => {
+const YearRow = (props: any) => {
   const { currentYear } = props;
+  const ACTUAL_WEEKS_IN_A_YEAR = 52.1429;
+  const WEEKS_BLOCKS_IN_ROW = Math.ceil(ACTUAL_WEEKS_IN_A_YEAR);
   const isMultipleOfFive = (currentYear + 1) % 5 === 0;
   const hasLabel = currentYear % 5 === 0;
+
   return (
     <View
       style={{
@@ -121,42 +139,55 @@ const YearRow = (props: { currentYear: number }) => {
       <View style={{ width: 6, height: 6 }}>
         {hasLabel && <Text style={{ fontSize: 5 }}>{currentYear}</Text>}
       </View>
-      {Array(WEEKS_IN_YEAR)
+      {Array(WEEKS_BLOCKS_IN_ROW)
         .fill(WeekSquare)
         .map((Week, index) => (
           <Week
             currentWeekInYear={index}
-            currentYear={currentYear}
             hasBottomMargin={isMultipleOfFive}
+            {...props}
           />
         ))}
     </View>
   );
 };
 
-const LifeInWeeks = () => {
+const LifeInWeeks = (props: any) => {
+  // Number of columns
+  const YEARS_IN_LIFE = getYearsOfLife(
+    props.formData.gender,
+    props.formData.nationality
+  );
+  const emojiData = getEmojiData(props.formData);
+  const myAgeInWeeks = dayjs().diff(dayjs(props.formData.birthday), "week");
+
   return (
     <View>
       {Array(YEARS_IN_LIFE)
         .fill(YearRow)
         .map((Year, index) => (
-          <Year currentYear={index} />
+          <Year
+            currentYear={index}
+            {...props}
+            myAgeInWeeks={myAgeInWeeks}
+            emojiData={emojiData}
+          />
         ))}
     </View>
   );
 };
 
 // Create Document Component
-const Printable = (props: { name: string }) => {
-  const { name } = props;
+const Printable = (props: any) => {
+  const { formData } = props;
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.section, { marginBottom: 30 }]}>
-          <Text>LIFE IN WEEKS of {name}</Text>
+          <Text>LIFE IN WEEKS of {formData.name || "Undisclosed"}</Text>
         </View>
         <View style={styles.section}>
-          <LifeInWeeks />
+          <LifeInWeeks {...props} />
         </View>
       </Page>
     </Document>
