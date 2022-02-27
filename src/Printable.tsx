@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 // Number of Rows
-const WEEKS_BLOCKS_IN_ROW = 53;
+const WEEKS_BLOCKS_IN_ROW = 52;
 
 const EpochWrapper = (props: { isShaded?: boolean; children: any }) => {
   const { isShaded = false, children } = props;
@@ -65,7 +65,8 @@ const WeekSquare = (props: any) => {
 
   const currentWeek = currentYear * WEEKS_BLOCKS_IN_ROW + currentWeekInYear;
   const isFilled = currentWeek < props.myAgeInWeeks;
-  const isMultipleOfFive = (currentWeekInYear + 1) % 5 === 0;
+  const WEEKS_PER_BLOCK = 4;
+  const isMultiple = currentWeekInYear % WEEKS_PER_BLOCK === 0;
 
   const emoji = props.emojiData.find((data: any) => data.week === currentWeek);
   const NO_CHILDREN =
@@ -73,15 +74,17 @@ const WeekSquare = (props: any) => {
     !props.formData.eldestChildBirthday;
 
   const Cell = () => {
+    const filledColor = "#2e2e2e"; //colors.brown
     return (
       <View
         style={[
           styles.weekSquare,
           {
-            backgroundColor: isFilled ? colors.brown : "white",
-            borderColor: colors.brown,
+            backgroundColor: isFilled ? filledColor : "white",
+            borderColor: filledColor,
+            borderRadius: "3px",
             borderWidth: isFilled ? 0 : 1,
-            marginRight: isMultipleOfFive ? SPACING : 0,
+            marginRight: isMultiple ? SPACING : 0,
             marginBottom: hasBottomMargin ? SPACING : 0,
           },
         ]}
@@ -105,7 +108,7 @@ const WeekSquare = (props: any) => {
     "week"
   );
 
-  const WEEKS_TO_RAISE_A_CHILD = 18 * WEEKS_BLOCKS_IN_ROW;
+  const WEEKS_TO_RAISE_A_CHILD = 21 * WEEKS_BLOCKS_IN_ROW;
   const lastChild =
     props.formData.youngestChildBirthday || props.formData.eldestChildBirthday;
   const WEEK_CHILD_END =
@@ -188,6 +191,12 @@ const Printable = (props: any) => {
         </View>
         <View style={styles.section}>
           <LifeInWeeks {...props} />
+        </View>
+        <View style={{ marginTop: "10px" }}>
+          <Text style={{ fontSize: "10px", color: "grey" }}>
+            {new Date().toLocaleDateString()} ©{new Date().getFullYear()} Life
+            In Weeks
+          </Text>
         </View>
       </Page>
     </Document>

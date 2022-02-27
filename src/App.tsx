@@ -79,7 +79,7 @@ const intitialValues: FormValuesInterface = {
   email: "",
 };
 const App = () => {
-  const [page, setPage] = useState("landing");
+  const [page, setPage] = useState("preview");
 
   const [finalValues, setFinalValues] =
     useState<FormValuesInterface>(intitialValues);
