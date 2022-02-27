@@ -56,30 +56,30 @@ const testData = {
 const intitialValues: FormValuesInterface = {
   // Basic Info
   name: "",
-  birthday: "1980-01-01",
-  gender: "male",
-  nationality: "United States",
+  birthday: "", //"1980-01-01",
+  gender: "", //"male",
+  nationality: "", //"United States",
   // Education Info
-  highSchoolFinishDate: "2000-06-01",
-  collegeFinishDate: "2000-04-01",
-  gradSchoolFinishDate: "2000-12-01",
+  highSchoolFinishDate: "", //"2000-06-01",
+  collegeFinishDate: "", //"2000-04-01",
+  gradSchoolFinishDate: "", //"2000-12-01",
   // Family Info
-  eldestChildBirthday: "2000-01-01",
-  youngestChildBirthday: "2020-01-01",
-  anniversary: "2000-01-01",
+  eldestChildBirthday: "", //"2000-01-01",
+  youngestChildBirthday: "", //"2020-01-01",
+  anniversary: "", //"2000-01-01",
   // Career Info
-  careerStartDate: "2000-01-01",
-  businessStartDate: "2000-01-01",
-  retirementDate: "2030-01-01",
+  careerStartDate: "", //"2000-01-01",
+  businessStartDate: "", //"2000-01-01",
+  retirementDate: "", //"2030-01-01",
   // Milestones Info
-  milestone1: "2030-04-01",
-  milestone2: "2030-04-01",
-  milestone3: "2030-04-01",
+  milestone1: "", //"2030-04-01",
+  milestone2: "", //"2030-04-01",
+  milestone3: "", //"2030-04-01",
   // Submit
   email: "",
 };
 const App = () => {
-  const [page, setPage] = useState("preview");
+  const [page, setPage] = useState("landing");
 
   const [finalValues, setFinalValues] =
     useState<FormValuesInterface>(intitialValues);

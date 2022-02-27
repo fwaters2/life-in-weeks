@@ -16,6 +16,23 @@ export const getYearsOfLife = (gender: string, nationality: string) => {
   return returnedVal;
 };
 
+const getYearsFromBirthday = (date: any, birthday: any) => {
+  return dayjs(date).diff(birthday, "year");
+};
+const getWeeksFromBirthdayInYear = (date: any, birthday: any) => {
+  const yearsFromBirthday = getYearsFromBirthday(date, birthday);
+  const mostRecentBirthdayDate = dayjs(birthday).add(yearsFromBirthday, "year");
+  const weeksFromBirthday = dayjs(date).diff(mostRecentBirthdayDate, "week");
+  // This stops an event from rolling over to the following year
+  return weeksFromBirthday > 51 ? 51 : weeksFromBirthday;
+};
+export const getWeeksFromBirthday = (date: any, birthday: any) => {
+  return (
+    52 * getYearsFromBirthday(date, birthday) +
+    getWeeksFromBirthdayInYear(date, birthday)
+  ); //dayjs(date).diff(dayjs(dates.birthday), "week");
+};
+
 export const getEmojiData = (dates: {
   name?: string;
   birthday?: any;
@@ -62,48 +79,62 @@ export const getEmojiData = (dates: {
   const emojiData: { emoji: string; week: number }[] = [
     { emoji: BIRTHDAY_EMOJI, week: 0 },
   ];
-  const getWeeksFromBirthday = (date: any) => {
-    return dayjs(date).diff(dayjs(dates.birthday), "week");
-  };
+  // const getYearsFromBirthday = (date: any) => {
+  //   return dayjs(date).diff(dates.birthday, "year");
+  // };
+  // const getWeeksFromBirthdayInYear = (date: any) => {
+  //   const yearsFromBirthday = getYearsFromBirthday(date);
+  //   const mostRecentBirthdayDate = dayjs(dates.birthday).add(
+  //     yearsFromBirthday,
+  //     "year"
+  //   );
+  //   const weeksFromBirthday = dayjs(date).diff(mostRecentBirthdayDate, "week");
+  //   // This stops an event from rolling over to the following year
+  //   return weeksFromBirthday > 51 ? 51 : weeksFromBirthday;
+  // };
+  // const getWeeksFromBirthday = (date: any) => {
+  //   return 52 * getYearsFromBirthday(date) + getWeeksFromBirthdayInYear(date); //dayjs(date).diff(dayjs(dates.birthday), "week");
+  // };
+
   Object.values(graduationDates).forEach((date) => {
     if (date) {
-      const week = getWeeksFromBirthday(date);
+      const week = getWeeksFromBirthday(date, dates.birthday);
       emojiData.push({ emoji: GRADUATION_EMOJI, week });
     }
   });
   Object.values(childBirthdayDates).forEach((date) => {
     if (date) {
-      const week = getWeeksFromBirthday(date);
+      const week = getWeeksFromBirthday(date, dates.birthday);
       emojiData.push({ emoji: CHILD_BIRTHDAY_EMOJI, week });
     }
   });
   if (dates.anniversary) {
     emojiData.push({
       emoji: ANNIVERSARY_EMOJI,
-      week: getWeeksFromBirthday(dates.anniversary),
+      week: getWeeksFromBirthday(dates.anniversary, dates.birthday),
     });
   }
   if (dates.careerStartDate) {
     emojiData.push({
       emoji: START_CAREER_EMOJI,
-      week: getWeeksFromBirthday(dates.careerStartDate),
+      week: getWeeksFromBirthday(dates.careerStartDate, dates.birthday),
     });
   }
   if (dates.businessStartDate) {
     emojiData.push({
       emoji: START_BUSINESS_EMOJI,
-      week: getWeeksFromBirthday(dates.businessStartDate),
+      week: getWeeksFromBirthday(dates.businessStartDate, dates.birthday),
     });
   }
   if (dates.retirementDate) {
     emojiData.push({
       emoji: RETIREMENT_EMOJI,
-      week: getWeeksFromBirthday(dates.retirementDate),
+      week: getWeeksFromBirthday(dates.retirementDate, dates.birthday),
     });
   }
   Object.values(milestoneDates).forEach((date) => {
     if (date) {
-      const week = getWeeksFromBirthday(date);
+      const week = getWeeksFromBirthday(date, dates.birthday);
       emojiData.push({ emoji: MILESTONE_EMOJI, week });
     }
   });

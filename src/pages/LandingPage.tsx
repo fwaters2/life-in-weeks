@@ -34,6 +34,18 @@ const LandingPage = (props: { setPage: any }) => {
         }}
       >
         <h1 style={{ textAlign: "center" }}>Your Life in Weeks</h1>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <img
+            src={require("../assets/images/logo.png")}
+            alt="logo"
+            style={{ background: "white", borderRadius: "60px" }}
+          />
+        </div>
         {paragraphs.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
