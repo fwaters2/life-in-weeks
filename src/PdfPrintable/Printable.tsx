@@ -62,9 +62,7 @@ const Printable = (props: any) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.section, { marginBottom: 30 }]}>
-          <Text style={{ fontFamily: "adobe-arabic" }}>
-            LIFE IN WEEKS of {formData.name || "Undisclosed"}
-          </Text>
+          <Text>LIFE IN WEEKS of {formData.name || "Undisclosed"}</Text>
         </View>
         <View style={styles.section}>
           <LifeInWeeks {...props} />
