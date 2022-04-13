@@ -8,13 +8,14 @@ import {
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
 import { colors } from "../assets/colors";
-import { getEmojiData, getYearsOfLife } from "../utils";
+import { getEmojiData, getWeeksFromBirthday, getYearsOfLife } from "../utils";
 import Row from "./components/Row";
 
 Font.registerEmojiSource({
   format: "png",
   url: "https://twemoji.maxcdn.com/2/72x72/",
 });
+
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -36,7 +37,7 @@ const LifeInWeeks = (props: any) => {
     props.formData.nationality
   );
   const emojiData = getEmojiData(props.formData);
-  const myAgeInWeeks = dayjs().diff(dayjs(props.formData.birthday), "week");
+  const myAgeInWeeks = getWeeksFromBirthday(dayjs(), props.formData.birthday);
 
   return (
     <View>
@@ -61,7 +62,9 @@ const Printable = (props: any) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={[styles.section, { marginBottom: 30 }]}>
-          <Text>LIFE IN WEEKS of {formData.name || "Undisclosed"}</Text>
+          <Text style={{ fontFamily: "adobe-arabic" }}>
+            LIFE IN WEEKS of {formData.name || "Undisclosed"}
+          </Text>
         </View>
         <View style={styles.section}>
           <LifeInWeeks {...props} />

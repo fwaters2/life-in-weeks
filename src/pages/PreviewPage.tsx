@@ -20,6 +20,12 @@ const PreviewPage = (props: any) => {
         <Typography variant="body2" margin={2}>
           ----- or -----
         </Typography>
+        <Button variant="outlined" color="primary" onClick={props.goBack}>
+          Go Back
+        </Button>
+        <Typography variant="body2" margin={2}>
+          ----- or -----
+        </Typography>
         <Button
           variant="contained"
           color="primary"

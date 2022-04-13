@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import FormPage from "./pages/FormPage";
+import FormPage from "./pages/FormPage/FormPage";
 import LandingPage from "./pages/LandingPage";
 import PreviewPage from "./pages/PreviewPage";
 import { Formik, Form } from "formik";
-import { CircularProgress, Typography } from "@mui/material";
+import {
+  CircularProgress,
+  createTheme,
+  CssBaseline,
+  ThemeProvider,
+  Typography,
+} from "@mui/material";
 
 export interface FormValuesInterface {
   name: string;
@@ -78,6 +84,34 @@ const intitialValues: FormValuesInterface = {
   // Submit
   email: "",
 };
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "adobe-arabic, sans-serif",
+    fontSize: 20,
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: adobe-arabic;
+          font-style: normal;
+          font-size:10px;
+          line-height: 2;
+         
+        }
+      `,
+    },
+  },
+  palette: {
+    primary: {
+      main: "#A07263",
+    },
+    secondary: {
+      main: "#B9E2DD",
+    },
+  },
+});
 const App = () => {
   const [page, setPage] = useState("landing");
 
@@ -95,54 +129,62 @@ const App = () => {
           </Form>
         );
       case "preview":
-        return <PreviewPage finalValues={finalValues} />;
+        return (
+          <PreviewPage
+            finalValues={finalValues}
+            goBack={() => setPage("form")}
+          />
+        );
       default:
         return <LandingPage setPage={setPage} />;
     }
   };
 
   return (
-    <Formik
-      initialValues={intitialValues}
-      // validate={values => {
-      //   const errors = {};
-      //   if (values.token.length < 5) {
-      //     errors.token = 'Invalid code. Too short.';
-      //   }
-      //   return errors;
-      // }}
-      onSubmit={(values, actions) => {
-        setFinalValues(values);
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Formik
+        initialValues={intitialValues}
+        // validate={values => {
+        //   const errors = {};
+        //   if (values.token.length < 5) {
+        //     errors.token = 'Invalid code. Too short.';
+        //   }
+        //   return errors;
+        // }}
+        onSubmit={(values, actions) => {
+          setFinalValues(values);
 
-        setTimeout(() => {
-          //alert(JSON.stringify(values, null, 2));
-          actions.setSubmitting(false);
-          setPage("preview");
-        }, 2000);
-      }}
-    >
-      {(props) =>
-        // todo: this does not initiate the loading of the pdf
-        props.isSubmitting ? (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              minHeight: "100vh",
-            }}
-          >
-            <Typography variant="h4" gutterBottom>
-              Generating PDF
-            </Typography>
-            <CircularProgress />
-          </div>
-        ) : (
-          <CurrentPage />
-        )
-      }
-    </Formik>
+          setTimeout(() => {
+            //alert(JSON.stringify(values, null, 2));
+            actions.setSubmitting(false);
+            setPage("preview");
+          }, 2000);
+        }}
+      >
+        {(props) =>
+          // todo: this does not initiate the loading of the pdf
+          props.isSubmitting ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                minHeight: "100vh",
+              }}
+            >
+              <Typography variant="h4" gutterBottom>
+                Generating PDF
+              </Typography>
+              <CircularProgress />
+            </div>
+          ) : (
+            <CurrentPage />
+          )
+        }
+      </Formik>
+    </ThemeProvider>
   );
 };
 

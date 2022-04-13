@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, Divider, Typography } from "@mui/material";
 import React from "react";
 
 const paragraphs = [
@@ -20,11 +20,9 @@ const LandingPage = (props: { setPage: any }) => {
   return (
     <div
       style={{
-        padding: "20px",
-
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        padding: "2em 1em",
       }}
     >
       <div
@@ -33,7 +31,9 @@ const LandingPage = (props: { setPage: any }) => {
           maxWidth: "600px",
         }}
       >
-        <h1 style={{ textAlign: "center" }}>Your Life in Weeks</h1>
+        <Typography variant="h3" style={{ textAlign: "center" }}>
+          Your Life in Weeks
+        </Typography>
         <div
           style={{
             display: "flex",
@@ -43,19 +43,30 @@ const LandingPage = (props: { setPage: any }) => {
           <img
             src={require("../assets/images/logo.png")}
             alt="logo"
-            style={{ background: "white", borderRadius: "60px" }}
+            style={{
+              borderRadius: "60px",
+              width: "200px",
+              margin: "1em",
+            }}
           />
         </div>
         {paragraphs.map((p, i) => (
-          <p key={i}>{p}</p>
+          <>
+            <Divider style={{ marginTop: "1em", marginBottom: "1em" }} />
+            <Typography variant="body2" key={i}>
+              {p}
+            </Typography>
+          </>
         ))}
         <ul>
           {list.map((l, i) => (
-            <li key={i}>{l}</li>
+            <Typography variant="body2" component="li" key={i}>
+              {l}
+            </Typography>
           ))}
         </ul>
       </div>
-      <Button variant="contained" onClick={() => setPage("form")}>
+      <Button variant="contained" onClick={() => setPage("form")} fullWidth>
         Begin
       </Button>
     </div>

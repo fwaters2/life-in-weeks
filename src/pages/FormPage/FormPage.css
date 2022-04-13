@@ -1,0 +1,40 @@
+
+#root{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
+}
+.form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin:0 1em;
+    min-height: 600px;
+}
+.step-content {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    justify-content: center;
+    padding:2em 0;
+}
+
+.steps-complete-container{
+    align-items: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+    .form-container{
+        max-width:100%;
+    }
+    .step-content {
+        width: 100%;
+    }
+}
+    
+
