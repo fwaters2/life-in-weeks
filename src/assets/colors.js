@@ -6,4 +6,5 @@ export const colors = {
   teal: "B9E2DD",
   blue: "#9D9BCC",
   lightgrey: "#EEEEED",
+  backdrop: "#51c9c9",
 };

@@ -8,17 +8,25 @@ import { getWeeksFromBirthday } from "../../../utils";
 // Number of Rows
 const WEEKS_BLOCKS_IN_ROW = 52;
 
-const EpochWrapper = (props: { isShaded?: boolean; children: any }) => {
+const SPACING = 2;
+const filledColor = colors.brown;
+
+const EpochWrapper = (props: {
+  hasEmoji: boolean;
+  isShaded?: boolean;
+  children: any;
+}) => {
   const { isShaded = false, children } = props;
+
   return (
-    <View style={{ position: "relative" }}>
+    <View style={{ position: "relative", zIndex: props.hasEmoji ? 0 : 1 }}>
       {children}
       <View
         style={{
           position: "absolute",
           height: "100%",
           width: "100%",
-          backgroundColor: isShaded ? `${colors.blue}80` : `transparent`,
+          backgroundColor: isShaded ? `${colors.backdrop}30` : `transparent`,
         }}
       />
     </View>
@@ -44,14 +52,36 @@ const WeekSquare = (props: any) => {
   };
   if (NO_CHILDREN) {
     return (
-      <View>
-        <Cell
-          isFilled={isFilled}
-          isMultiple={isMultiple}
-          hasBottomMargin={hasBottomMargin}
-        />
-        {emoji && <EmojiWeek emoji={emoji} />}
-      </View>
+      <>
+        <View>
+          <Cell
+            isFilled={isFilled}
+            isMultiple={isMultiple}
+            hasBottomMargin={hasBottomMargin}
+          />
+        </View>
+        {emoji ? (
+          <View style={styles.emojiContainer}>
+            <EmojiWeek emoji={emoji} />
+          </View>
+        ) : (
+          <View
+            style={{
+              width: 8,
+              height: 8,
+              margin: 1,
+              position: "absolute",
+
+              backgroundColor: isFilled ? filledColor : "transparent",
+              borderColor: filledColor,
+              borderRadius: 3,
+              borderWidth: isFilled ? 0 : 1,
+              marginRight: isMultiple ? SPACING : 0,
+              marginBottom: hasBottomMargin ? SPACING : 0,
+            }}
+          />
+        )}
+      </>
     );
   }
   const WEEK_CHILD_START = getWeeksFromBirthday(
@@ -69,13 +99,34 @@ const WeekSquare = (props: any) => {
     currentWeek > WEEK_CHILD_START && currentWeek < WEEK_CHILD_END;
 
   return (
-    <EpochWrapper isShaded={isChildCareWeek}>
+    <EpochWrapper isShaded={isChildCareWeek} hasEmoji={!!emoji}>
       <Cell
         isFilled={isFilled}
         isMultiple={isMultiple}
         hasBottomMargin={hasBottomMargin}
       />
-      {emoji && <EmojiWeek emoji={emoji} />}
+
+      {emoji ? (
+        <View style={styles.emojiContainer}>
+          <EmojiWeek emoji={emoji} />
+        </View>
+      ) : (
+        <View
+          style={{
+            width: 8,
+            height: 8,
+            margin: 1,
+            position: "absolute",
+
+            backgroundColor: isFilled ? filledColor : "transparent",
+            borderColor: filledColor,
+            borderRadius: 3,
+            borderWidth: isFilled ? 0 : 1,
+            marginRight: isMultiple ? SPACING : 0,
+            marginBottom: hasBottomMargin ? SPACING : 0,
+          }}
+        />
+      )}
     </EpochWrapper>
   );
 };
@@ -83,13 +134,23 @@ const WeekSquare = (props: any) => {
 export default WeekSquare;
 
 const styles = StyleSheet.create({
-  emoji: {
-    fontSize: 7,
-    width: 10,
-    height: 10,
-    marginTop: 1,
+  emojiContainer: {
     position: "absolute",
-    backgroundColor: "white",
+    backgroundColor: "#ffffff",
+    borderRadius: "50%",
+
+    width: 11,
+    height: 11,
+
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  emoji: {
+    fontSize: 8,
+    // width: 12,
+    // height: 12,
+
     textAlign: "center",
   },
 });

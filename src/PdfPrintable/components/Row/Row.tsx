@@ -18,9 +18,13 @@ const Row = (props: any) => {
         flexDirection: "row",
       }}
     >
-      <View style={{ width: 6, height: 6 }}>
-        {hasLabel && <Text style={{ fontSize: 5 }}>{currentYear}</Text>}
-      </View>
+      {hasLabel && (
+        <View style={{ left: -15, top: 1, position: "absolute" }}>
+          <Text style={{ fontSize: 10, fontFamily: "Palatino" }}>
+            {currentYear}
+          </Text>
+        </View>
+      )}
       {Array(WEEKS_BLOCKS_IN_ROW)
         .fill(WeekSquare)
         .map((Week, index) => (
