@@ -66,6 +66,7 @@ const LifeInWeeks = (props: any) => {
           }
           return (
             <Year
+              key={index}
               currentYear={index}
               {...props}
               myAgeInWeeks={myAgeInWeeks}

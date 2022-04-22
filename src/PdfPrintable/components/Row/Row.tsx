@@ -27,13 +27,16 @@ const Row = (props: any) => {
       )}
       {Array(WEEKS_BLOCKS_IN_ROW)
         .fill(WeekSquare)
-        .map((Week, index) => (
-          <Week
-            currentWeekInYear={index}
-            hasBottomMargin={hasBottomMargin}
-            {...props}
-          />
-        ))}
+        .map((Week, index) => {
+          return (
+            <Week
+              key={index}
+              currentWeekInYear={index}
+              hasBottomMargin={hasBottomMargin}
+              {...props}
+            />
+          );
+        })}
     </View>
   );
 };

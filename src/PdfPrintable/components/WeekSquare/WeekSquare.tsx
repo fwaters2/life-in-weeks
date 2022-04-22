@@ -52,14 +52,12 @@ const WeekSquare = (props: any) => {
   };
   if (NO_CHILDREN) {
     return (
-      <>
-        <View>
-          <Cell
-            isFilled={isFilled}
-            isMultiple={isMultiple}
-            hasBottomMargin={hasBottomMargin}
-          />
-        </View>
+      <View style={{ position: "relative", zIndex: props.hasEmoji ? 0 : 1 }}>
+        <Cell
+          isFilled={isFilled}
+          isMultiple={isMultiple}
+          hasBottomMargin={hasBottomMargin}
+        />
         {emoji ? (
           <View style={styles.emojiContainer}>
             <EmojiWeek emoji={emoji} />
@@ -81,7 +79,7 @@ const WeekSquare = (props: any) => {
             }}
           />
         )}
-      </>
+      </View>
     );
   }
   const WEEK_CHILD_START = getWeeksFromBirthday(
