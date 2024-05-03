@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
-import { colors } from "../../../assets/colors";
 import dayjs from "dayjs";
 import Cell from "./Cell";
 import { isIndexMultipleOfN } from "../../utils";
 import { getWeeksFromBirthday } from "../../../utils";
+import { colors } from "../../../assets/colors";
 
 // Number of Rows
 const WEEKS_BLOCKS_IN_ROW = 52;

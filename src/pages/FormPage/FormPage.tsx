@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import BasicInfoForm from "../../Forms/BasicInfoForm";
 import EducationInfoForm from "../../Forms/EducationInfoForm";
 import CareerInfoForm from "../../Forms/CareerInfoForm";
-import FormStepper from "../../components/FormStepper";
+// import FormStepper from "../../components/FormStepper";
 import NameForm from "../../Forms/NameForm";
 import FamilyInfoForm from "../../Forms/FamilyInfoForm";
 import MilestoneInfoForm from "../../Forms/MilestoneInfoForm";
@@ -33,9 +33,9 @@ interface WrapperProps {
   children: any;
 }
 const Wrapper = ({
-  activeStep,
-  completed,
-  handleStep,
+  // activeStep,
+  // completed,
+  // handleStep,
   children,
 }: WrapperProps) => {
   return (
@@ -69,7 +69,7 @@ export default function FormPage() {
       isLastStep && !allStepsCompleted
         ? // It's the last step, but not all steps have been completed,
           // find the first step that has been completed
-          steps.findIndex((step, i) => !(i in completed))
+          steps.findIndex((_, i) => !(i in completed))
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
@@ -89,19 +89,19 @@ export default function FormPage() {
     <FamilyInfoForm {...stepProps} />,
     <CareerInfoForm {...stepProps} />,
     <MilestoneInfoForm {...stepProps} />,
-    <SubmitForm {...stepProps} />,
+    <SubmitForm />,
   ];
 
   const handleStep = (step: number) => () => {
     setActiveStep(step);
   };
 
-  const handleComplete = () => {
-    const newCompleted = completed;
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
+  // const handleComplete = () => {
+  //   const newCompleted = completed;
+  //   newCompleted[activeStep] = true;
+  //   setCompleted(newCompleted);
+  //   handleNext();
+  // };
 
   const handleReset = () => {
     setActiveStep(0);

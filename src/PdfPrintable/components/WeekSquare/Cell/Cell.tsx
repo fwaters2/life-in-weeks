@@ -1,5 +1,4 @@
 import { View, StyleSheet } from "@react-pdf/renderer";
-import { colors } from "../../../../assets/colors";
 
 interface CellProps {
   isFilled: boolean;
@@ -9,8 +8,8 @@ interface CellProps {
 
 const SPACING = 2;
 const Cell = (props: CellProps) => {
-  const { isFilled, isMultiple, hasBottomMargin } = props;
-  const filledColor = "blue"; //colors.brown; // "#666666";
+  const { isMultiple, hasBottomMargin } = props;
+  // const filledColor = "blue"; //colors.brown; // "#666666";
   return (
     <>
       <View

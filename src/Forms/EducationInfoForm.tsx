@@ -1,4 +1,3 @@
-import React from "react";
 import { questions } from "../assets/questions";
 import QuestionInput from "../components/QuestionInput";
 import { getYearsOfLife } from "../utils";

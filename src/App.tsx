@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import FormPage from "./pages/FormPage/FormPage";
 import LandingPage from "./pages/LandingPage";
 import PreviewPage from "./pages/PreviewPage";
@@ -35,30 +35,30 @@ export interface FormValuesInterface {
   email: string;
 }
 
-const testData = {
-  name: "Forrest Waters",
-  birthday: new Date("1987-05-17"),
-  gender: "male",
-  nationality: "United States",
-  // Education Info
-  highSchoolFinishDate: new Date("2005-05-31"),
-  collegeFinishDate: new Date("2010-12-19"),
-  gradSchoolFinishDate: new Date("2012-12-01"),
-  // Family Info
-  eldestChildBirthday: new Date("2014-07-12"),
-  youngestChildBirthday: new Date("2016-04-22"),
-  anniversary: new Date("2014-06-06"),
-  // Career Info
-  careerStartDate: new Date("2013-10-22"),
-  businessStartDate: new Date("2020-02-14"),
-  retirementDate: new Date("2040-08-12"),
-  // Milestones Info
-  milestone1: null,
-  milestone2: new Date("2020-06-01"),
-  milestone3: new Date("2018-03-01"),
-  // Submit
-  email: "forrestwaters@gmail.com",
-};
+// const testData = {
+//   name: "Forrest Waters",
+//   birthday: new Date("1987-05-17"),
+//   gender: "male",
+//   nationality: "United States",
+//   // Education Info
+//   highSchoolFinishDate: new Date("2005-05-31"),
+//   collegeFinishDate: new Date("2010-12-19"),
+//   gradSchoolFinishDate: new Date("2012-12-01"),
+//   // Family Info
+//   eldestChildBirthday: new Date("2014-07-12"),
+//   youngestChildBirthday: new Date("2016-04-22"),
+//   anniversary: new Date("2014-06-06"),
+//   // Career Info
+//   careerStartDate: new Date("2013-10-22"),
+//   businessStartDate: new Date("2020-02-14"),
+//   retirementDate: new Date("2040-08-12"),
+//   // Milestones Info
+//   milestone1: null,
+//   milestone2: new Date("2020-06-01"),
+//   milestone3: new Date("2018-03-01"),
+//   // Submit
+//   email: "forrestwaters@gmail.com",
+// };
 const intitialValues: FormValuesInterface = {
   // Basic Info
   name: "",

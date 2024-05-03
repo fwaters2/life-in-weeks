@@ -1,7 +1,6 @@
 import { MenuItem } from "@mui/material";
 import { Field } from "formik";
 import { TextField } from "formik-mui";
-import React from "react";
 
 const QuestionInput = (props: any) => {
   const { value, label, type, ...rest } = props;

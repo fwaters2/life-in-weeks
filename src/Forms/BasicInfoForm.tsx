@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { useFormikContext } from "formik";
 import QuestionInput from "../components/QuestionInput";
 import { questions } from "../assets/questions";

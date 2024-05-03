@@ -7,7 +7,6 @@ import {
   Font,
 } from "@react-pdf/renderer";
 import dayjs from "dayjs";
-import { colors } from "../assets/colors";
 import { getEmojiData, getWeeksFromBirthday, getYearsOfLife } from "../utils";
 import Row from "./components/Row";
 import PalatinoFont from "./Palatino.ttf";

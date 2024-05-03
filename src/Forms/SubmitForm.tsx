@@ -1,7 +1,6 @@
 import { Button, Typography } from "@mui/material";
-import React from "react";
 
-const SubmitForm = ({ handleNext, handleBack }: any) => {
+const SubmitForm = () => {
   return (
     <>
       <Typography variant="h6" color="primary" gutterBottom>

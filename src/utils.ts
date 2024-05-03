@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
+import lifeExpectancyData from "./life-expectancy.json"
 
-const ACTUAL_WEEKS_IN_A_YEAR = 52.1429;
-const lifeExpectancyData = require("./life-expectancy.json");
+// const ACTUAL_WEEKS_IN_A_YEAR = 52.1429;
 
-export const getYearsOfLife = (gender: string, nationality: string) => {
+export const getYearsOfLife = (gender: "male" | "female", nationality: string) => {
   const expectancyForNationality = lifeExpectancyData.find(
     (data: { nationality: string }) => data.nationality === nationality
   );

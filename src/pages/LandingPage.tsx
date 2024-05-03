@@ -1,5 +1,4 @@
 import { Button, Divider, Typography } from "@mui/material";
-import React from "react";
 
 const paragraphs = [
   "You will often hear child-rearing described as a time in your life when the days are long, but the years are short. One day your baby is a baby, and the next they are in kindergarten.",
@@ -41,7 +40,7 @@ const LandingPage = (props: { setPage: any }) => {
           }}
         >
           <img
-            src={require("../assets/images/logo.png")}
+            src="logo.png"
             alt="logo"
             style={{
               borderRadius: "60px",
