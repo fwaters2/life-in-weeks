@@ -6,10 +6,17 @@ import { questions } from "../assets/questions";
 import FormNavButtons from "../components/FormNavButtons";
 import { Typography } from "@mui/material";
 
+export interface LifeInWeeksFormData {
+  name: string;
+  birthday: string;
+  gender: string;
+  nationality: string;
+}
+
 const BasicInfoForm = (props: any) => {
   const {
     values: { name, birthday, gender, nationality },
-  } = useFormikContext();
+  } = useFormikContext<LifeInWeeksFormData>();
 
   const disabled = !birthday || !gender || !nationality;
 
