@@ -11,7 +11,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/lab": "^5.0.0-alpha.170",
     "@mui/material": "^5.15.15",
-    "@react-pdf/renderer": "^3.4.2",
+    "@react-pdf/renderer": "^3.4.4",
     "assert": "^2.1.0",
     "dayjs": "^1.11.10",
     "formik": "^2.4.5",
