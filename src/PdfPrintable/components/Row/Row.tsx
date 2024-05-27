@@ -2,8 +2,16 @@ import { Text, View } from "@react-pdf/renderer";
 import WeekSquare from "../WeekSquare";
 import { isIndexMultipleOfN } from "../../utils";
 
-const Row = (props: any) => {
-  const { currentYear } = props;
+interface RowProps {
+  currentYear: number;
+  myAgeInWeeks: number;
+  emojiData: any;
+  formData: any;
+  styles?: any;
+}
+
+const Row = (props: RowProps) => {
+  const { currentYear, styles } = props;
   const WEEKS_BLOCKS_IN_ROW = 52;
   const YEARS_PER_BLOCK = 5;
 
@@ -20,7 +28,7 @@ const Row = (props: any) => {
     >
       {hasLabel && (
         <View style={{ left: -15, top: 1, position: "absolute" }}>
-          <Text style={{ fontSize: 10, fontFamily: "Palatino" }}>
+          <Text style={styles.labelYear}>
             {currentYear}
           </Text>
         </View>

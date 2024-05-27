@@ -9,19 +9,19 @@ import {
 import dayjs from "dayjs";
 import { getEmojiData, getWeeksFromBirthday, getYearsOfLife } from "../utils";
 import Row from "./components/Row";
-import PalatinoFont from "./Palatino.ttf";
+// import PalatinoFont from "./Palatino.ttf";
+// const newPalatinoFontUrl = new URL("./Palatino.ttf", import.meta.url).href;
 
-const FONT_FAMILY = "Palatino";
+// const FONT_FAMILY = "Palatino";
 
 Font.registerEmojiSource({
   format: "png",
   url: "https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/",
 });
-Font.register({
-  family: FONT_FAMILY,
-  src: PalatinoFont,
-  // format: "truetype",
-});
+// Font.register({
+//   family: "Palatino",
+//   src:new URL("./Palatino.ttf", import.meta.url).href,
+// });
 
 // Create styles
 const styles = StyleSheet.create({
@@ -37,12 +37,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    fontFamily: FONT_FAMILY,
+    // fontFamily: FONT_FAMILY,
   },
   subtitle: {
-    fontFamily: FONT_FAMILY,
+    // fontFamily: FONT_FAMILY,
     fontSize: 10,
     marginTop: 2,
+  },
+  labelYear: {
+    fontSize: 10,
+    // fontFamily: FONT_FAMILY,
   },
 });
 
@@ -66,6 +70,7 @@ const LifeInWeeks = (props: any) => {
           return (
             <Year
               key={index}
+              styles={styles}
               currentYear={index}
               {...props}
               myAgeInWeeks={myAgeInWeeks}
